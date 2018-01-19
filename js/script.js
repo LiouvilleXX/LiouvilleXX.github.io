@@ -1,21 +1,21 @@
-var inp_flag=0;//Если inp_flag==0, то обрыбатываем ввод значений пользователя с клавиатуры, в противном случае стандартные инпуты
-var colorR="#FF0000";//Подсветка красный
-var colorY="#F7AA4B";//Подсветка желтый
-var delay=800;//задержка
+var inp_flag=0;//Р•СЃР»Рё inp_flag==0, С‚Рѕ РѕР±СЂС‹Р±Р°С‚С‹РІР°РµРј РІРІРѕРґ Р·РЅР°С‡РµРЅРёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹, РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РёРЅРїСѓС‚С‹
+var colorR="#FF0000";//РџРѕРґСЃРІРµС‚РєР° РєСЂР°СЃРЅС‹Р№
+var colorY="#F7AA4B";//РџРѕРґСЃРІРµС‚РєР° Р¶РµР»С‚С‹Р№
+var delay=800;//Р·Р°РґРµСЂР¶РєР°
 
-//Если мобильный
+//Р•СЃР»Рё РјРѕР±РёР»СЊРЅС‹Р№
 if(isMobile.any()) inp_flag=1;
 	
-// Случайное целое на промежутке
+// РЎР»СѓС‡Р°Р№РЅРѕРµ С†РµР»РѕРµ РЅР° РїСЂРѕРјРµР¶СѓС‚РєРµ
 function getRand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-//Переменный для добавления кривой
+//РџРµСЂРµРјРµРЅРЅС‹Р№ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РєСЂРёРІРѕР№
 var ns = 'http://www.w3.org/2000/svg';
 var svg = document.getElementById("svg");
 
 
-//Кросс-браузерная функция для получения символа из события keypress
+//РљСЂРѕСЃСЃ-Р±СЂР°СѓР·РµСЂРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЃРёРјРІРѕР»Р° РёР· СЃРѕР±С‹С‚РёСЏ keypress
 function getChar(event) {
   if (event.which == null) { 
     if (event.keyCode < 32) return null; 
@@ -29,11 +29,11 @@ function getChar(event) {
   return null; 
 }
 
-//Функция показывает инпут и рисует кривую
+//Р¤СѓРЅРєС†РёСЏ РїРѕРєР°Р·С‹РІР°РµС‚ РёРЅРїСѓС‚ Рё СЂРёСЃСѓРµС‚ РєСЂРёРІСѓСЋ
 function inpAndDraw(start,end,count) {	
 	var obj=document.getElementById("inp" + count);
-	var QD=axis.path(start,end);//координаты кривой
-	var inpXY=QD.q;//координаты для инпута
+	var QD=axis.path(start,end);//РєРѕРѕСЂРґРёРЅР°С‚С‹ РєСЂРёРІРѕР№
+	var inpXY=QD.q;//РєРѕРѕСЂРґРёРЅР°С‚С‹ РґР»СЏ РёРЅРїСѓС‚Р°
 	var prev=count-1;
 		
 	setTimeout(function() {
@@ -57,19 +57,19 @@ function inpAndDraw(start,end,count) {
 		obj.style.borderColor="grey";
 		obj.style.opacity="1";
 		obj.value="";
-		check=0;//разрешаем обработку нажатий
+		check=0;//СЂР°Р·СЂРµС€Р°РµРј РѕР±СЂР°Р±РѕС‚РєСѓ РЅР°Р¶Р°С‚РёР№
 	}, delay);	
 	
 }
 
-//Функция для нахождения кривой Безье
+//Р¤СѓРЅРєС†РёСЏ РґР»СЏ РЅР°С…РѕР¶РґРµРЅРёСЏ РєСЂРёРІРѕР№ Р‘РµР·СЊРµ
 function getPath(start,end) {
   var X1 = this.axisX + start * this.step;
   var distance = this.step * (end - start);
   var X2 = X1 + distance;
   var Qx = X1 + distance / 2;
   var Qy = this.axisY - distance / 2;
-  //Возвращаем массив с кривое Безье и координатами для инпута(из уравнения кривой)
+  //Р’РѕР·РІСЂР°С‰Р°РµРј РјР°СЃСЃРёРІ СЃ РєСЂРёРІРѕРµ Р‘РµР·СЊРµ Рё РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё РґР»СЏ РёРЅРїСѓС‚Р°(РёР· СѓСЂР°РІРЅРµРЅРёСЏ РєСЂРёРІРѕР№)
   var data={
 	  d:"M" + X1 + "," + this.axisY + "Q" + Qx + "," + Qy + " " + X2 + "," + this.axisY  + "",
 	  q:[Qx,0.5*this.axisY + 0.5*Qy]
@@ -78,7 +78,7 @@ function getPath(start,end) {
   
 }
 
-//Деление, координаты оси
+//Р”РµР»РµРЅРёРµ, РєРѕРѕСЂРґРёРЅР°С‚С‹ РѕСЃРё
 var axis = {
   step: 39,
   axisX: 35,
@@ -95,20 +95,20 @@ var axis = {
   }
 }
 
-var inpCount=0;//Счетчик инпутов
+var inpCount=0;//РЎС‡РµС‚С‡РёРє РёРЅРїСѓС‚РѕРІ
 
-//Подбираем числа и выводим
+//РџРѕРґР±РёСЂР°РµРј С‡РёСЃР»Р° Рё РІС‹РІРѕРґРёРј
 var leftRand=getRand(6,9),rightRand=getRand(11-leftRand,14-leftRand),res=leftRand+rightRand;
 document.getElementById("plus").innerHTML="<span>" + leftRand + "</span> + <span>" + rightRand + "</span> = <input id='inp2' type='text' value='?' maxlength='2' disabled>"; 
-var outArr=[leftRand, rightRand, res];//Массив для связи ввода и вывода
+var outArr=[leftRand, rightRand, res];//РњР°СЃСЃРёРІ РґР»СЏ СЃРІСЏР·Рё РІРІРѕРґР° Рё РІС‹РІРѕРґР°
 var outs=document.getElementsByTagName("span");
 
-//первый инпут и кривая
+//РїРµСЂРІС‹Р№ РёРЅРїСѓС‚ Рё РєСЂРёРІР°СЏ
 inpAndDraw(0,leftRand,0);
 
-var check=0;//флаг для предотвращения обработки нажатия в случае очень быстрого набора 
+var check=0;//С„Р»Р°Рі РґР»СЏ РїСЂРµРґРѕС‚РІСЂР°С‰РµРЅРёСЏ РѕР±СЂР°Р±РѕС‚РєРё РЅР°Р¶Р°С‚РёСЏ РІ СЃР»СѓС‡Р°Рµ РѕС‡РµРЅСЊ Р±С‹СЃС‚СЂРѕРіРѕ РЅР°Р±РѕСЂР° 
 
-//Если inp_flag==0, то обрыбатываем ввод значений пользователя с клавиатуры, в противном случае стандартные инпуты
+//Р•СЃР»Рё inp_flag==0, С‚Рѕ РѕР±СЂС‹Р±Р°С‚С‹РІР°РµРј РІРІРѕРґ Р·РЅР°С‡РµРЅРёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹, РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РёРЅРїСѓС‚С‹
 if(inp_flag==0) {
 	addEventListener("keypress", function(e) {
 		if(check!=1){
@@ -125,7 +125,7 @@ if(inp_flag==0) {
 				  else {
 					inp.value=inp.value+num;  
 				  }
-				//Верный ответ или нет, для последнего инпута особые условия
+				//Р’РµСЂРЅС‹Р№ РѕС‚РІРµС‚ РёР»Рё РЅРµС‚, РґР»СЏ РїРѕСЃР»РµРґРЅРµРіРѕ РёРЅРїСѓС‚Р° РѕСЃРѕР±С‹Рµ СѓСЃР»РѕРІРёСЏ
 				if(inp.value!=outArr[inpCount]){
 					if(inpCount!=2) {
 						inp.style.color=colorR;
@@ -137,7 +137,7 @@ if(inp_flag==0) {
 					if(inpCount!=2) {		
 					outs[inpCount].style.background=colorY;
 					inpCount++;
-					check=1;//блокируем обработку пока не завершится функция inpAndDraw
+					check=1;//Р±Р»РѕРєРёСЂСѓРµРј РѕР±СЂР°Р±РѕС‚РєСѓ РїРѕРєР° РЅРµ Р·Р°РІРµСЂС€РёС‚СЃСЏ С„СѓРЅРєС†РёСЏ inpAndDraw
 					inpAndDraw(num,+num+outArr[inpCount],inpCount);
 					} else {
 					inp.style.borderColor="white";
@@ -149,14 +149,14 @@ if(inp_flag==0) {
 	});
 } else {
 	document.getElementById("inp0").disabled=false;
-	//Без jquery вешаем oninput на все инпуты
+	//Р‘РµР· jquery РІРµС€Р°РµРј oninput РЅР° РІСЃРµ РёРЅРїСѓС‚С‹
 	[].forEach.call( document.querySelectorAll('input'), function(el) {
 	   el.oninput = function() {
 			if(check!=1){
 			var num=el.value;
 			if (num.match(/[0-9]/)) {
 				var inp=document.getElementById("inp" + inpCount);
-				//Верный ответ или нет, для последнего инпута особые условия
+				//Р’РµСЂРЅС‹Р№ РѕС‚РІРµС‚ РёР»Рё РЅРµС‚, РґР»СЏ РїРѕСЃР»РµРґРЅРµРіРѕ РёРЅРїСѓС‚Р° РѕСЃРѕР±С‹Рµ СѓСЃР»РѕРІРёСЏ
 				if(inp.value!=outArr[inpCount]){
 					if(inpCount!=2) {
 						inp.style.color=colorR;
@@ -168,7 +168,7 @@ if(inp_flag==0) {
 					if(inpCount!=2) {		
 					outs[inpCount].style.background=colorY;
 					inpCount++;
-					check=1;//блокируем обработку пока не завершится функция inpAndDraw
+					check=1;//Р±Р»РѕРєРёСЂСѓРµРј РѕР±СЂР°Р±РѕС‚РєСѓ РїРѕРєР° РЅРµ Р·Р°РІРµСЂС€РёС‚СЃСЏ С„СѓРЅРєС†РёСЏ inpAndDraw
 					inpAndDraw(num,+num+outArr[inpCount],inpCount);
 					} else {
 					inp.style.borderColor="white";
